@@ -13,7 +13,7 @@ import (
 )
 
 func HandlerHTML(w http.ResponseWriter, r *http.Request) {
-	content, err := os.ReadFile("C:/Users/curvh/Documents/go_backend_test_homework/finaltask6/finaltask6/index.html")
+	content, err := os.ReadFile("index.html")
 	if err != nil {
 		http.Error(w, "Ошибка чтения файла", http.StatusInternalServerError)
 		return
