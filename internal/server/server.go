@@ -17,15 +17,12 @@ type Service struct {
 }
 
 func NewServer() *http.Server {
-	// Создаем логгер
 	logger := log.New(log.Writer(), "SERVER: ", log.LstdFlags)
 	
-	// Создаем роутер
 	r := chi.NewRouter()
 	r.Get("/", handlers.HandlerHTML)
 	r.Post("/upload", handlers.Upload)
 	
-	// Создаем экземпляр http.Server с указанными настройками
 	server := &http.Server{
 		Addr:         ":8080",           // Порт 8080
 		Handler:      r,                 // HTTP-роутер
@@ -39,7 +36,7 @@ func NewServer() *http.Server {
 }
 
 func main() {
-	// Создаем сервер
+
 	_ = NewServer()
-	// Здесь можно запустить сервер
+
 }

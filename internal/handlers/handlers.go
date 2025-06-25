@@ -6,11 +6,14 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
+
+	"github.com/Yandex-Practicum/go1fl-sprint6-final/internal/service"
 )
 
 func HandlerHTML(w http.ResponseWriter, r *http.Request) {
-	content, err := os.ReadFile("index.html")
+	content, err := os.ReadFile("C:/Users/curvh/Documents/go_backend_test_homework/finaltask6/finaltask6/index.html")
 	if err != nil {
 		http.Error(w, "Ошибка чтения файла", http.StatusInternalServerError)
 		return
@@ -59,10 +62,10 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 
 	fileName := time.Now().UTC().String()
 	fileExt := filepath.Ext(header.Filename)
-	convertedFileName := "converted_" + fileName + fileExt
+	safeFileName := strings.ReplaceAll(fileName, ":", "_")
+	convertedFileName := "converted_" + safeFileName + fileExt
+	convertedContent := service.DetermineConversionType(string(fileData))
 	
-	convertedContent := fmt.Sprintf("КОНВЕРТИРОВАННОЕ СОДЕРЖИМОЕ ФАЙЛА %s:\n\n%s", 
-		header.Filename, string(fileData))
 	
 	convertedFile, err := os.Create("uploads/" + convertedFileName)
 	if err != nil {
