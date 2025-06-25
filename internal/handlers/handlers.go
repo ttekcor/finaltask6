@@ -46,21 +46,8 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("Получен файл: %s, размер: %d байт\n", header.Filename, len(fileData))
 
-	dst, err := os.Create("uploads/" + header.Filename)
-	if err != nil {
-		http.Error(w, "Ошибка создания файла", http.StatusInternalServerError)
-		return
-	}
-
-	defer dst.Close()
-	
-	_, err = io.Copy(dst, file)
-	if err != nil {
-		http.Error(w, "Ошибка сохранения файла", http.StatusInternalServerError)
-		return
-	}
-
-	fileName := time.Now().UTC().String()
+	os.MkdirAll("uploads", os.ModePerm)
+	fileName := time.Now().UTC().Format("20060102_150405")
 	fileExt := filepath.Ext(header.Filename)
 	safeFileName := strings.ReplaceAll(fileName, ":", "_")
 	convertedFileName := "converted_" + safeFileName + fileExt
