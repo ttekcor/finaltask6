@@ -77,7 +77,7 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 		<p><strong>Первые 100 символов содержимого:</strong></p>
 		<pre>%s</pre>
 	`, header.Filename, len(fileData), header.Header.Get("Content-Type"), 
-	   convertedFileName, string(fileData[:min(len(fileData), 100)]))
+	   convertedFileName, convertedContent[:min(len(convertedContent), 100)])
 }
 
 func min(a, b int) int {
