@@ -65,25 +65,7 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	response := fmt.Sprintf(`
-		<h1>Файл успешно загружен и конвертирован!</h1>
-		<p><strong>Имя файла:</strong> %s</p>
-		<p><strong>Размер:</strong> %d байт</p>
-		<p><strong>Тип файла:</strong> %s</p>
-		<p><strong>Файл конвертации:</strong> %s</p>
-		<p><strong>Исходный текст:</strong></p>
-		<pre>%s</pre>
-		<p><strong>Конвертированный текст:</strong></p>
-		<pre>%s</pre>
-	`, header.Filename, len(fileData), header.Header.Get("Content-Type"),
-		convertedFileName, string(fileData), convertedContent)
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	response := convertedContent
 	w.Write([]byte(response))
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
 }
